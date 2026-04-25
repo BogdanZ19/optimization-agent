@@ -1,13 +1,15 @@
 package ro.tuiasi.ac.gui;
 
 import java.awt.*;
+import org.springframework.stereotype.Component;
 import java.io.File;
 
 import javax.swing.*;
 
-public class MainWindow {
+@Component
+public class MainWindow extends JFrame {
 
-    private JFrame frame;
+    private static final long serialVersionUID = 1L;
     private JTextField txtFolder;
     private JButton btnBrowse;
     private JButton btnStart;
@@ -19,7 +21,7 @@ public class MainWindow {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             MainWindow window = new MainWindow();
-            window.frame.setVisible(true);
+            window.setVisible(true);
         });
     }
 
@@ -28,14 +30,14 @@ public class MainWindow {
     }
 
     private void initialize() {
-        frame = new JFrame("Java Code Optimizer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(1000, 650));
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setTitle("Java Code Optimizer");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1000, 650));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
-        frame.setContentPane(mainPanel);
+        setContentPane(mainPanel);
 
         // ================= TOP PANEL =================
         JPanel topPanel = new JPanel(new GridBagLayout());
@@ -160,13 +162,13 @@ public class MainWindow {
         });
 
         btnAccept.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Cod acceptat!");
+            JOptionPane.showMessageDialog(this, "Cod acceptat!");
             btnAccept.setEnabled(false);
             btnReject.setEnabled(false);
         });
 
         btnReject.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Cod respins!");
+            JOptionPane.showMessageDialog(this, "Cod respins!");
             btnAccept.setEnabled(false);
             btnReject.setEnabled(false);
         });
@@ -177,7 +179,7 @@ public class MainWindow {
         chooser.setDialogTitle("Selectează folderul cu fișiere .java");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        int result = chooser.showOpenDialog(frame);
+        int result = chooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File folder = chooser.getSelectedFile();
