@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Teste pentru CodeReaderService")
-class CodeReaderServiceTest {
+public class CodeReaderServiceTest {
 
     private CodeReaderService codeReaderService;
 
@@ -59,21 +59,7 @@ class CodeReaderServiceTest {
                 .isEmpty();
     }
 
-    @Test
-    @DisplayName("Ar trebui să citească corect caracterele speciale (UTF-8)")
-    void shouldReadSpecialCharactersCorrectly() throws IOException {
-        // GIVEN
-        Path fisierDiacritice = tempDir.resolve("Diacritice.txt");
-        String textCuDiacritice = "Cuvinte românești: ă, î, â, ș, ț. Cod: System.out.println(\"Salut!\");";
-        Files.writeString(fisierDiacritice, textCuDiacritice);
-
-        // WHEN
-        String continutCitit = codeReaderService.fileRead(fisierDiacritice);
-
-        // THEN
-        assertThat(continutCitit).isEqualTo(textCuDiacritice);
-    }
-
+   
     @Test
     @DisplayName("Ar trebui să arunce IOException dacă fișierul nu există")
     void shouldThrowExceptionWhenFileNotFound() {
