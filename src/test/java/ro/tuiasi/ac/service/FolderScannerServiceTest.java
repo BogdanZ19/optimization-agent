@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FolderScannerServiceTest {
+public class FolderScannerServiceTest {
 
     private FolderScannerService folderScannerService;
 
