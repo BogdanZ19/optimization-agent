@@ -1,12 +1,15 @@
 package ro.tuiasi.ac.gui;
 
 import java.awt.*;
+
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import java.io.File;
 
 import javax.swing.*;
 
 @Component
+@Profile("!test")
 public class MainWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -17,14 +20,14 @@ public class MainWindow extends JFrame {
     private JButton btnReject;
     private JTextArea txtOriginalCode;
     private JTextArea txtOptimizedCode;
-
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             MainWindow window = new MainWindow();
             window.setVisible(true);
         });
     }
-
+    
     public MainWindow() {
         initialize();
     }
