@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Teste pentru BackupService")
-class BackupServiceTest {
+public class BackupServiceTest {
 
     private BackupService backupService;
 
