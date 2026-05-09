@@ -5,11 +5,11 @@ import java.awt.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import java.io.File;
+import java.io.Serial;
 
 import javax.swing.*;
 
-@Component
-@Profile("!test")
+
 public class MainWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
