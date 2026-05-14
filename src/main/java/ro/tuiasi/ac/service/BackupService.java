@@ -9,20 +9,18 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 
-
-
 @Service
 public class BackupService {
-	public Path createBackup(Path filePath) throws IOException{
-		DateTimeFormatter date=DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-		String timestamp =LocalDateTime.now().format(date);
-		
+	public Path createBackup(Path filePath) throws IOException {
+		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+		String timestamp = LocalDateTime.now().format(date);
+
 		String originalFileName = filePath.getFileName().toString();
-		String backupFileName=originalFileName + "_"+timestamp+".bak";
-		
-		Path backupFilePath =filePath.resolveSibling(backupFileName);
-		
-		Files.copy(filePath,backupFilePath, StandardCopyOption.REPLACE_EXISTING);
+		String backupFileName = originalFileName + "_" + timestamp + ".bak";
+
+		Path backupFilePath = filePath.resolveSibling(backupFileName);
+
+		Files.copy(filePath, backupFilePath, StandardCopyOption.REPLACE_EXISTING);
 		return backupFilePath;
 	}
 }
