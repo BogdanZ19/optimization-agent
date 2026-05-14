@@ -25,7 +25,7 @@ public class OptimizationController {
 
 	@PostMapping("/accept")
 	public ResponseEntity<String> accept(@RequestBody OptimizationSuggestion suggestion) throws IOException {
-		PatchApplyService.applyPatch(suggestion.filePath(), suggestion.optimizedCode());
+		(new PatchApplyService()).applyPatch(suggestion.filePath(), suggestion.optimizedCode());
 
 		return ResponseEntity.ok("Optimization applied successfully.");
 	}

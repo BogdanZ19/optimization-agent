@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PatchApplyService {
 	
-	public static void applyPatch(Path filePath, String newContent)throws IOException{
+	public void applyPatch(Path filePath, String newContent)throws IOException{
 		Files.writeString(filePath, newContent);
 	}
 }
