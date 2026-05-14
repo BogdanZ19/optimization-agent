@@ -16,59 +16,53 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Teste pentru CodeReaderService")
 public class CodeReaderServiceTest {
 
-    private CodeReaderService codeReaderService;
+	private CodeReaderService codeReaderService;
 
-    @TempDir
-    Path tempDir;
+	@TempDir
+	Path tempDir;
 
-    @BeforeEach
-    void setUp() {
-        codeReaderService = new CodeReaderService();
-    }
+	@BeforeEach
+	void setUp() {
+		codeReaderService = new CodeReaderService();
+	}
 
-    @Test
-    @DisplayName("Ar trebui să citească tot conținutul unui fișier valid")
-    void shouldReadFileContentSuccessfully() throws IOException {
-        // GIVEN
-        Path fisierTest = tempDir.resolve("ValidCode.java");
-        String continutAsteptat = "public class ValidCode {\n\t// Test\n}";
-        Files.writeString(fisierTest, continutAsteptat);
+	@Test
+	@DisplayName("Ar trebui să citească tot conținutul unui fișier valid")
+	void shouldReadFileContentSuccessfully() throws IOException {
+		// GIVEN
+		Path fisierTest = tempDir.resolve("ValidCode.java");
+		String continutAsteptat = "public class ValidCode {\n\t// Test\n}";
+		Files.writeString(fisierTest, continutAsteptat);
 
-        // WHEN 
-        String continutCitit = codeReaderService.fileRead(fisierTest);
+		// WHEN
+		String continutCitit = codeReaderService.fileRead(fisierTest);
 
-        // THEN 
-        assertThat(continutCitit)
-                .as("Textul citit trebuie să fie identic cu cel din fișier")
-                .isEqualTo(continutAsteptat)
-                .isNotBlank();
-    }
+		// THEN
+		assertThat(continutCitit).as("Textul citit trebuie să fie identic cu cel din fișier")
+				.isEqualTo(continutAsteptat).isNotBlank();
+	}
 
-    @Test
-    @DisplayName("Ar trebui să returneze un text gol dacă fișierul nu conține nimic")
-    void shouldReturnEmptyStringForEmptyFile() throws IOException {
-        // GIVEN
-        Path fisierGol = Files.createFile(tempDir.resolve("Empty.java"));
+	@Test
+	@DisplayName("Ar trebui să returneze un text gol dacă fișierul nu conține nimic")
+	void shouldReturnEmptyStringForEmptyFile() throws IOException {
+		// GIVEN
+		Path fisierGol = Files.createFile(tempDir.resolve("Empty.java"));
 
-        // WHEN
-        String continutCitit = codeReaderService.fileRead(fisierGol);
+		// WHEN
+		String continutCitit = codeReaderService.fileRead(fisierGol);
 
-        // THEN
-        assertThat(continutCitit)
-                .as("Un fișier gol ar trebui să returneze un String gol")
-                .isEmpty();
-    }
+		// THEN
+		assertThat(continutCitit).as("Un fișier gol ar trebui să returneze un String gol").isEmpty();
+	}
 
-   
-    @Test
-    @DisplayName("Ar trebui să arunce IOException dacă fișierul nu există")
-    void shouldThrowExceptionWhenFileNotFound() {
-        // GIVEN
-        Path fisierInexistent = tempDir.resolve("Fantoma.java");
+	@Test
+	@DisplayName("Ar trebui să arunce IOException dacă fișierul nu există")
+	void shouldThrowExceptionWhenFileNotFound() {
+		// GIVEN
+		Path fisierInexistent = tempDir.resolve("Fantoma.java");
 
-        // WHEN & THEN
-        assertThatThrownBy(() -> codeReaderService.fileRead(fisierInexistent))
-                .isInstanceOf(IOException.class)
-                .hasMessageContaining("Fantoma.java");
-    }
+		// WHEN & THEN
+		assertThatThrownBy(() -> codeReaderService.fileRead(fisierInexistent)).isInstanceOf(IOException.class)
+				.hasMessageContaining("Fantoma.java");
+	}
 }

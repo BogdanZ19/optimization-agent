@@ -8,8 +8,8 @@ import java.nio.file.Path;
 
 @Service
 public class CodeReaderService {
-	public String fileRead(Path filePath) throws IOException{
+	public String fileRead(Path filePath) throws IOException {
 		return Files.readString(filePath);
 	}
-	
+
 }
