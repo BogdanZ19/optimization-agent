@@ -62,7 +62,7 @@ public class CodeValidationService {
 		return null;
 	}
 
-	private String cleanMarkdown(String aiResponse) {
+	public String cleanMarkdown(String aiResponse) {
 		if (aiResponse == null)
 			return "";
 		int startIndex = aiResponse.indexOf("```");

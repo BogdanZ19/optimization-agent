@@ -43,14 +43,13 @@ class AgentLoopServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Injectăm manual valorile pentru @Value pe care Mockito nu le pune singur
         ReflectionTestUtils.setField(agentLoopService, "maxIterations", 3);
         ReflectionTestUtils.setField(agentLoopService, "size", 1024);
     }
 
     @Test
     void testAnalyze_SuccessOnFirstTry() throws IOException {
-        // Arrange
+        
         String firstPrompt = "Optimizes this code please";
         String idealProposal = "public class Example { // optimized }";
         
@@ -63,57 +62,57 @@ class AgentLoopServiceTest {
         when(geminiClient.generate(firstPrompt)).thenReturn(idealProposal);
         when(validator.validate(originalCode, idealProposal, filePath)).thenReturn(mockResult);
 
-        // Act
+        
         OptimizationSuggestion result = agentLoopService.analyze(filePath);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(filePath, result.filePath()); // presupunând că ai getter în model
-        assertEquals(idealProposal, result.optimizedCode()); // corectat conform logicii tale din serviciu
         
-        // Ne asigurăm că s-a oprit după prima iterație și nu a mai făcut loop-ul
+        assertNotNull(result);
+        assertEquals(filePath, result.filePath()); 
+        assertEquals(idealProposal, result.optimizedCode()); 
+        
+       
         verify(promptBuilder, times(1)).FirstOptimizationPrompt(any(), any());
         verify(promptBuilder, never()).LoopOptimizationPrompt(any(), any(), any(), any());
     }
 
     @Test
     void testAnalyze_FailsThenSucceeds() throws IOException {
-        // Arrange
+       
         String firstPrompt = "Initial prompt";
         String loopPrompt = "Loop prompt";
         String badProposal = "public class Bad {}";
         String goodProposal = "public class Good {}";
 
-        // Mock pentru prima încercare (Eșuată)
+        
         ValidationResult badResult = mock(ValidationResult.class);
         when(badResult.isValid()).thenReturn(false);
         when(badResult.getErrors()).thenReturn(List.of("Syntax Error"));
 
-        // Mock pentru a doua încercare (Reușită)
+        
         ValidationResult goodResult = mock(ValidationResult.class);
         when(goodResult.isValid()).thenReturn(true);
         when(goodResult.getErrors()).thenReturn(Collections.emptyList());
 
         when(codeReader.fileRead(filePath)).thenReturn(originalCode);
         
-        // Iterația 1
+      
         when(promptBuilder.FirstOptimizationPrompt(filePath, originalCode)).thenReturn(firstPrompt);
         when(geminiClient.generate(firstPrompt)).thenReturn(badProposal);
         when(validator.validate(originalCode, badProposal, filePath)).thenReturn(badResult);
 
-        // Iterația 2
+      
         when(promptBuilder.LoopOptimizationPrompt(filePath, originalCode, badProposal, "Syntax Error")).thenReturn(loopPrompt);
         when(geminiClient.generate(loopPrompt)).thenReturn(goodProposal);
         when(validator.validate(originalCode, goodProposal, filePath)).thenReturn(goodResult);
 
-        // Act
+    
         OptimizationSuggestion result = agentLoopService.analyze(filePath);
 
-        // Assert
+     
         assertNotNull(result);
         assertEquals(goodProposal, result.optimizedCode());
         
-        // Verificăm fluxul
+    
         verify(promptBuilder, times(1)).FirstOptimizationPrompt(any(), any());
         verify(promptBuilder, times(1)).LoopOptimizationPrompt(any(), any(), any(), any());
     }

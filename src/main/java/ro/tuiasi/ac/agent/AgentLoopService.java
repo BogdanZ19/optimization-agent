@@ -22,6 +22,8 @@ public class AgentLoopService {
 	private CodeValidationService validator;
     @Autowired
 	private CodeReaderService codeReader;
+    @Autowired
+
 
 	@Value("${agent.max-iterations}")
 	private int maxIterations;
@@ -56,7 +58,9 @@ public class AgentLoopService {
 				state.setLastErrors(errorMessages);
 			}
 		}
-		OptimizationSuggestion sugestion = new OptimizationSuggestion(filePath, originalCode, currentProposal, false);
+		
+		OptimizationSuggestion sugestion = new OptimizationSuggestion(filePath, originalCode, validator.cleanMarkdown(currentProposal), false);
+		
 		return sugestion;
 	}
 }
