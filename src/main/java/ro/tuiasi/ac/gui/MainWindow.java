@@ -1,12 +1,7 @@
 package ro.tuiasi.ac.gui;
 
 import java.awt.*;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 import java.io.File;
-import java.io.Serial;
-
 import javax.swing.*;
 
 

@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 
 
-@Service
 public class FolderScannerService {
 	@Value("#{'${scanner.allowed-extensions}'.split(',')}")
 	private List<String> allowedExtensions;

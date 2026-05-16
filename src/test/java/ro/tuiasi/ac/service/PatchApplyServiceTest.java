@@ -15,43 +15,42 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Teste pentru PatchApplyService")
 public class PatchApplyServiceTest {
 
-    private PatchApplyService patchApplyService;
+	private PatchApplyService patchApplyService;
 
-    @TempDir
-    Path tempDir;
+	@TempDir
+	Path tempDir;
 
-    @BeforeEach
-    void setUp() {
-        patchApplyService = new PatchApplyService();
-    }
+	@BeforeEach
+	void setUp() {
+		patchApplyService = new PatchApplyService();
+	}
 
-    @Test
-    @DisplayName("Ar trebui să suprascrie cu succes fișierul original cu noul cod")
-    void shouldApplyPatchSuccessfully() throws IOException {
-        // GIVEN (Avem un fișier cu cod vechi și pregătim codul nou)
-        Path fisierDeModificat = tempDir.resolve("Main.java");
-        Files.writeString(fisierDeModificat, "Cod Vechi, Neoptimizat");
-        
-        String codNouDeLaGemini = "Cod Nou, Curat si Optimizat";
+	@Test
+	@DisplayName("Ar trebui să suprascrie cu succes fișierul original cu noul cod")
+	void shouldApplyPatchSuccessfully() throws IOException {
+		// GIVEN (Avem un fișier cu cod vechi și pregătim codul nou)
+		Path fisierDeModificat = tempDir.resolve("Main.java");
+		Files.writeString(fisierDeModificat, "Cod Vechi, Neoptimizat");
 
-        // WHEN (Apelăm serviciul tău ca să aplice noul cod)
-        patchApplyService.applyPatch(fisierDeModificat, codNouDeLaGemini);
+		String codNouDeLaGemini = "Cod Nou, Curat si Optimizat";
 
-        // THEN (Verificăm dacă textul s-a schimbat)
-        String continutDupaPatch = Files.readString(fisierDeModificat);
-        assertThat(continutDupaPatch)
-                .as("Conținutul fișierului trebuie să fie exact codul nou")
-                .isEqualTo(codNouDeLaGemini);
-    }
+		// WHEN (Apelăm serviciul tău ca să aplice noul cod)
+		patchApplyService.applyPatch(fisierDeModificat, codNouDeLaGemini);
 
-    @Test
-    @DisplayName("Ar trebui să arunce IOException dacă nu poate scrie (ex: calea e un folder, nu un fișier)")
-    void shouldThrowExceptionWhenCannotWrite() {
-        // GIVEN (Încercăm să scriem direct peste folderul temporar, ceea ce sistemul de operare nu permite)
-        String codNou = "Test Eroare";
+		// THEN (Verificăm dacă textul s-a schimbat)
+		String continutDupaPatch = Files.readString(fisierDeModificat);
+		assertThat(continutDupaPatch).as("Conținutul fișierului trebuie să fie exact codul nou")
+				.isEqualTo(codNouDeLaGemini);
+	}
 
-        // WHEN & THEN (Trebuie să dea eroare)
-        assertThatThrownBy(() -> patchApplyService.applyPatch(tempDir, codNou))
-                .isInstanceOf(IOException.class);
-    }
+	@Test
+	@DisplayName("Ar trebui să arunce IOException dacă nu poate scrie (ex: calea e un folder, nu un fișier)")
+	void shouldThrowExceptionWhenCannotWrite() {
+		// GIVEN (Încercăm să scriem direct peste folderul temporar, ceea ce sistemul de
+		// operare nu permite)
+		String codNou = "Test Eroare";
+
+		// WHEN & THEN (Trebuie să dea eroare)
+		assertThatThrownBy(() -> patchApplyService.applyPatch(tempDir, codNou)).isInstanceOf(IOException.class);
+	}
 }
