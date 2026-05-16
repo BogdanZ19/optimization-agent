@@ -6,7 +6,9 @@ import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.GenerateImagesConfig;
 import com.google.genai.types.GenerationConfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -15,16 +17,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
-
+@SpringBootTest
 public class GeminiClientServiceTests {
-	private final GeminiClientService service = new GeminiClientService();
+	@Autowired
+	private GeminiClientService service;
+	@Autowired
+	private PromptBuilderService promptBuild;
+	
 	private Client client = new Client();
 
 	@Test
 	void testGenerateWithMultiplicationExample() {
-		ReflectionTestUtils.setField(service, "isMockMode", true);
 
-		PromptBuilderService promptBuild = new PromptBuilderService();
 		Path path = Path.of("src", "project", "inmultire.java");	
 		
 		String sourceCode = "package project " + "public class MultiplicationExample {\n"
@@ -35,11 +39,9 @@ public class GeminiClientServiceTests {
 		String prompt = promptBuild.FirstOptimizationPrompt(path, sourceCode);
 
 		String response = service.generate(prompt);
+		System.out.println(response);
 
 		assertNotNull(response, "Răspunsul nu trebuie să fie null");
-
-		assertTrue(response.contains("public class OptimizedCode"),
-				"Răspunsul mock ar trebui să returneze clasa optimizată simulată.");
 
 		assertTrue(response.startsWith("```java"),
 				"Codul returnat trebuie să fie într-un bloc markdown java[cite: 135].");
