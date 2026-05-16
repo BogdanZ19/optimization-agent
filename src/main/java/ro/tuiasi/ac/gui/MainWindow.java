@@ -28,8 +28,6 @@ public class MainWindow extends JFrame {
     }
 
     private void initialize() {
-        GuiEventListener eventListener = new GuiEventListener(txtFolder, btnBrowse, btnStart, btnAccept, btnReject, txtOriginalCode, txtOptimizedCode);
-
         setTitle("Java Code Optimizer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1000, 650));
@@ -148,45 +146,26 @@ public class MainWindow extends JFrame {
         rightPanel.add(btnReject, gbcRight);
 
         // ================= ACTIONS =================
-        btnBrowse.addActionListener(e -> browseFolder());
-
-        btnStart.addActionListener(e -> {
-            // Aici vei pune logica ta de optimizare
-
-            txtOriginalCode.setText("// Cod original aici...\n\npublic class Test {\n    public static void main(String[] args) {\n        System.out.println(\"Original\");\n    }\n}");
-
-            txtOptimizedCode.setText("// Cod optimizat aici...\n\npublic class Test {\n    public static void main(String[] args) {\n        System.out.println(\"Optimizat\");\n    }\n}");
-
-            btnAccept.setEnabled(true);
-            btnReject.setEnabled(true);
-        });
-
-        btnAccept.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Cod acceptat!");
-            btnAccept.setEnabled(false);
-            btnReject.setEnabled(false);
-        });
-
-        btnReject.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Cod respins!");
-            btnAccept.setEnabled(false);
-            btnReject.setEnabled(false);
-        });
+        GuiEventListener eventListener = new GuiEventListener(txtFolder, btnBrowse, btnStart, btnAccept, btnReject, txtOriginalCode, txtOptimizedCode);
+        btnBrowse.addActionListener(eventListener);
+        btnStart.addActionListener(eventListener);
+        btnAccept.addActionListener(eventListener);
+        btnReject.addActionListener(eventListener);
     }
 
-    private void browseFolder() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Selectează folderul cu fișiere .java");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        int result = chooser.showOpenDialog(this);
-
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File folder = chooser.getSelectedFile();
-            txtFolder.setText(folder.getAbsolutePath());
-
-            // dupa selectarea folderului, deblocam START
-            btnStart.setEnabled(true);
-        }
-    }
+//    private void browseFolder() {
+//        JFileChooser chooser = new JFileChooser();
+//        chooser.setDialogTitle("Selectează folderul cu fișiere .java");
+//        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//
+//        int result = chooser.showOpenDialog(this);
+//
+//        if (result == JFileChooser.APPROVE_OPTION) {
+//            File folder = chooser.getSelectedFile();
+//            txtFolder.setText(folder.getAbsolutePath());
+//
+//            // dupa selectarea folderului, deblocam START
+//            btnStart.setEnabled(true);
+//        }
+//    }
 }

@@ -124,8 +124,8 @@ public class GuiEventListener implements ActionListener {
                     btnReject.setEnabled(true);
 
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error in analyze request: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-
+                    //JOptionPane.showMessageDialog(null, "Error in analyze request: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Error in analyze request: " + ex.getMessage());
                     txtOriginalCode.setText("");
                     txtOptimizedCode.setText("");
 

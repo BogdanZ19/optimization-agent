@@ -3,7 +3,7 @@ package ro.tuiasi.ac.service;
 import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
-
+@Service
 public class PromptBuilderService {
 		public String FirstOptimizationPrompt(Path relativePath, String sourceCode) {
 			String prompt= new String("You are a Java code optimization agent. You receive exactly one Java file, not a folder or full "

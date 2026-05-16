@@ -4,19 +4,24 @@ import java.io.IOException;
 
 import java.nio.file.Path;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.api.client.util.Value;
+import org.springframework.beans.factory.annotation.Value;
 
 import ro.tuiasi.ac.service.*;
 import ro.tuiasi.ac.model.*;
 
 @Service
 public class AgentLoopService {
-	private final GeminiClientService geminiClient;
-	private final PromptBuilderService promptBuilder;
-	private final CodeValidationService validator;
-	private final CodeReaderService codeReader;
+    @Autowired
+	private GeminiClientService geminiClient;
+    @Autowired
+	private PromptBuilderService promptBuilder;
+    @Autowired
+	private CodeValidationService validator;
+    @Autowired
+	private CodeReaderService codeReader;
 
 	@Value("${agent.max-iterations}")
 	private int maxIterations;
@@ -24,14 +29,6 @@ public class AgentLoopService {
 	@Value("${scanner.max-file-size}")
 	private int size;
 
-	public AgentLoopService(GeminiClientService geminiClient, PromptBuilderService promptBuilder,
-
-			CodeValidationService validator, CodeReaderService codeReader) {
-		this.geminiClient = geminiClient;
-		this.promptBuilder = promptBuilder;
-		this.validator = validator;
-		this.codeReader = codeReader;
-	}
 
 	public OptimizationSuggestion analyze(Path filePath) throws IOException {
 		String originalCode = codeReader.fileRead(filePath);
