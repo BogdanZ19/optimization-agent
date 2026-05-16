@@ -10,15 +10,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class CodeOptimizerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(CodeOptimizerApplication.class);
-		
-		app.setHeadless(false);
-		
-		ConfigurableApplicationContext context = app.run(args);
+		SpringApplication.run(CodeOptimizerApplication.class, args);
 
 		SwingUtilities.invokeLater(() -> {
-			MainWindow window = context.getBean(MainWindow.class);
-			window.setVisible(true);
+			new MainWindow().setVisible(true);
 		});
 	}
 
