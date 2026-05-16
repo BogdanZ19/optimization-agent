@@ -2,6 +2,8 @@ HELP.md
 target/
 .gitattributes
 
+.env
+
 .metadata
 bin/
 tmp/

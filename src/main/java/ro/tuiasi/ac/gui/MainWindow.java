@@ -152,20 +152,4 @@ public class MainWindow extends JFrame {
         btnAccept.addActionListener(eventListener);
         btnReject.addActionListener(eventListener);
     }
-
-//    private void browseFolder() {
-//        JFileChooser chooser = new JFileChooser();
-//        chooser.setDialogTitle("Selectează folderul cu fișiere .java");
-//        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-//
-//        int result = chooser.showOpenDialog(this);
-//
-//        if (result == JFileChooser.APPROVE_OPTION) {
-//            File folder = chooser.getSelectedFile();
-//            txtFolder.setText(folder.getAbsolutePath());
-//
-//            // dupa selectarea folderului, deblocam START
-//            btnStart.setEnabled(true);
-//        }
-//    }
 }

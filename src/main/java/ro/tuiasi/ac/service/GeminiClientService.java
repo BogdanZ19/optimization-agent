@@ -1,6 +1,7 @@
 package ro.tuiasi.ac.service;
 
 import com.google.genai.Client;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,10 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class GeminiClientService {
 
-	@Value("${gemini.api.key}")
-	private String apiKey;
+//	@Value("${gemini.api.key}")
+//	private String apiKey;
+	Dotenv dotenv = Dotenv.load();
+	String apiKey = dotenv.get("GEMINI_API_KEY");
 
 	@Value("${app.mock-mode}")
 	private boolean isMockMode;
