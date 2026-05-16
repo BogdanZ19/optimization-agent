@@ -9,9 +9,6 @@ import jakarta.annotation.PostConstruct;
 
 @Service
 public class GeminiClientService {
-
-//	@Value("${gemini.api.key}")
-//	private String apiKey;
 	Dotenv dotenv = Dotenv.load();
 	String apiKey = dotenv.get("GEMINI_API_KEY");
 
