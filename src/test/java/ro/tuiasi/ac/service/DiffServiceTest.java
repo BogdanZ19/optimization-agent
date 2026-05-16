@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Tests for DiffService")
-class DiffServiceTest {
+public class DiffServiceTest {
 
 	private DiffService diffService;
 

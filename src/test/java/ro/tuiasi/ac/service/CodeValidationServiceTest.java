@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Teste pentru CodeValidationService")
-class CodeValidationServiceTest {
+public class CodeValidationServiceTest {
 
 	private CodeValidationService validationService;
 
