@@ -1,6 +1,6 @@
 package ro.tuiasi.ac.agent;
 
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 import org.springframework.stereotype.Service;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.util.Value;
 
 import ro.tuiasi.ac.service.*;
-import ro.tuiasi.ac.agent.*;
 import ro.tuiasi.ac.model.*;
 
 @Service
@@ -25,13 +24,14 @@ public class AgentLoopService {
 	private int size;
 
 	public AgentLoopService(GeminiClientService geminiClient, PromptBuilderService promptBuilder,
-			CodeValidationService validator) {
+			CodeValidationService validator, CodeReaderService codeReader) {
 		this.geminiClient = geminiClient;
 		this.promptBuilder = promptBuilder;
 		this.validator = validator;
+		this.codeReader=codeReader;
 	}
 
-	public OptimizationSuggestion analyze(Path filePath) {
+	public OptimizationSuggestion analyze(Path filePath) throws IOException {
 		String originalCode = codeReader.fileRead(filePath);
 		AgentState state = new AgentState(originalCode);
 		String currentProposal = "";
@@ -42,19 +42,20 @@ public class AgentLoopService {
 
 			currentProposal = geminiClient.generate(prompt);
 
-			ValidationResult vResult = validator.validate(currentProposal);
-
+			ValidationResult vResult = validator.validate(originalCode,currentProposal,filePath);
+			String errorMessages= String.join(";",vResult.getErrors());
 			AgentStep step = new AgentStep(i, (i == 1) ? "INITIAL_PROPOSAL" : "REVISION", currentProposal,
-					vResult.isValid() ? "SUCCESS" : "FAILED", vResult.getErrorMessage());
+					vResult.isValid() ? "SUCCESS" : "FAILED", errorMessages);
 			state.addStep(step);
 			if (vResult.isValid()) {
 				state.setFinalized(true);
 				state.setFinalCode(currentProposal);
 				break;
 			} else {
-				state.setLastErrors(vResult.getErrorMessage());
+				state.setLastErrors(errorMessages);
 			}
 		}
 		OptimizationSuggestion sugestion = new OptimizationSuggestion(filePath, originalCode, currentProposal, false);
+		return sugestion;
 	}
 }
