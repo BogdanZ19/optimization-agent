@@ -28,6 +28,8 @@ public class MainWindow extends JFrame {
     }
 
     private void initialize() {
+        GuiEventListener eventListener = new GuiEventListener(txtFolder, btnBrowse, btnStart, btnAccept, btnReject, txtOriginalCode, txtOptimizedCode);
+
         setTitle("Java Code Optimizer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1000, 650));
