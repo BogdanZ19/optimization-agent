@@ -1,16 +1,11 @@
 package ro.tuiasi.ac.service;
 
 import org.junit.jupiter.api.Test;
-
-import com.google.genai.Client;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 
 class PromptBuilderServiceTests {
-	private Client client= new Client();
-
     private final PromptBuilderService promptBuilder = new PromptBuilderService();
 
     @Test

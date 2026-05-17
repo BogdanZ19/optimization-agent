@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import ro.tuiasi.ac.model.OptimizationSuggestion;
 
-import javax.swing.*;
 
 
 import java.io.File;
