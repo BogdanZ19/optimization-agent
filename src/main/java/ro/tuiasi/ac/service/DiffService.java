@@ -2,8 +2,21 @@ package ro.tuiasi.ac.service;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * Service component responsible for generating a simple textual diff report
+ * between an original source and its optimized version.
+ */
 @Service
 public class DiffService {
+	/**
+	 * Generates a summary report describing the line count difference
+	 * between the original and optimized code snippets.
+	 *
+	 * @param originalCode the original source code, may be {@code null}
+	 * @param optimizedCode the optimized source code, may be {@code null}
+	 * @return a textual diff report containing line counts and a summary of
+	 *         whether lines were added, removed, modified, or unchanged
+	 */
 	public String generateSimpleDiff(String originalCode, String optimizedCode) {
 		if (originalCode == null) {
 			originalCode = "";
