@@ -3,16 +3,37 @@ package ro.tuiasi.ac.gui;
 import java.awt.*;
 import javax.swing.*;
 
-
+/**
+ * Main application window for the code optimization tool.
+ * <p>
+ * Displays the selected folder path, original and optimized code views,
+ * and provides controls to browse for a folder, start optimization,
+ * accept or reject optimized code output.
+ * </p>
+ */
 public class MainWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
+
+    /** Text field that shows the selected source folder. */
     private JTextField txtFolder;
+
+    /** Button to browse for the source folder. */
     private JButton btnBrowse;
+
+    /** Button to start the optimization process. */
     private JButton btnStart;
+
+    /** Button to accept the optimized code. */
     private JButton btnAccept;
+
+    /** Button to reject the optimized code. */
     private JButton btnReject;
+
+    /** Text area that displays original source code. */
     private JTextArea txtOriginalCode;
+
+    /** Text area that displays optimized source code. */
     private JTextArea txtOptimizedCode;
     
     public static void main(String[] args) {
