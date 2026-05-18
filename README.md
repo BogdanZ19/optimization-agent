@@ -1,6 +1,6 @@
-# Java Code Optimizer Agent
+# Java Code Optimization Agent
 
-The **Java Code Optimizer** is an intelligent desktop application that leverages an AI agent (Gemini) to analyze and optimize Java source code. It utilizes a Spring Boot backend to manage the optimization loop and a Java Swing desktop interface for user interactions.
+The **Optimization Agent** is an intelligent desktop application that leverages an AI agent (Gemini) to analyze and optimize Java source code. It utilizes a Spring Boot backend to manage the optimization loop and a Java Swing desktop interface for user interactions.
 
 ## 🚀 Features
 
